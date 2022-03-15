@@ -1,0 +1,67 @@
+{
+    "_id":""623022e080efd043dc4a92b7"",
+    "PT. Indodev Niaga Internet": {
+        "BOD00001. Board of Directors":[
+            {
+                "DVS00001. Information Technology":[
+                    {
+                        "division": "ITSDERP. ERP Development"
+                    },
+                    {
+                        "division": "DVS0005. Tech Development"
+                    },
+                    {
+                        "division": "DVS00008. Software Maintenance"
+                    },
+                    {
+                        "division": "DVS00012. Quality Assurance"
+                    },
+                    {
+                        "division": "DVS0007. IT Support"
+                    },
+                    {
+                        "division": "IMPOVS. Implementation - AT"
+                    },
+                    {
+                        "division": "DVS00014. Human Resourse"
+                    },
+                    {
+                        "division": "ITQA. HR Development"
+                    },
+                    {
+                        "division": "DVS00013. General Affairs"
+                    },
+                    {
+                        "division": "ITSERP. ERP Implementation"
+                    },
+                    {
+                        "division": "DVS00016 Training"
+                    }
+                ]
+            },
+            {
+                "DVS00003. Marketing and Sales":[
+                    {
+                        "division": "DVS00017"
+                    }
+                ]
+            },
+            {
+                "division": "PURC. Purchasing"
+            },
+            {
+                "division": "DVS00015. Finance"
+            },
+            {
+                "SPRJT0001. Special Project":[
+                    {
+                        "division": "PMJ0001. PM Jakarta"
+                    },
+                    {
+                        "division": "DKR0001. Dekorey"
+                    }
+                ]
+            }
+        ]
+    }
+}
