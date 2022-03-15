@@ -16,7 +16,7 @@ import (
 //Connection mongoDB with helper class
 var collection = helper.ConnectDB()
 
-func getDivision(w http.ResponseWriter, r *http.Request) {
+func getDivisions(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var divisions []models.DataOn
@@ -55,7 +55,7 @@ func getDivision(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(divisions) // encode similar to serialize process.
 }
 
-func getBook(w http.ResponseWriter, r *http.Request) {
+func getDivision(w http.ResponseWriter, r *http.Request) {
 	// set header.
 	w.Header().Set("Content-Type", "application/json")
 
@@ -78,7 +78,7 @@ func getBook(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(division)
 }
 
-func createBook(w http.ResponseWriter, r *http.Request) {
+func createDivision(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var division models.DataOn
@@ -97,47 +97,44 @@ func createBook(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(result)
 }
 
-func updateBook(w http.ResponseWriter, r *http.Request) {
+func updateDivision(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var params = mux.Vars(r)
 
 	//Get id from parameters
-	div, _ := primitive.ObjectIDFromHex(params["division"])
+	div, _ := primitive.ObjectIDFromHex(params["id"])
 
 	var division models.DataOn
 
 	// Create filter
-	filter := bson.M{"division": div}
+	//filter := bson.M{"_id": div}
 
 	// Read update model from body request
 	_ = json.NewDecoder(r.Body).Decode(&division)
 
 	// prepare update model.
-	update := bson.D{
-		{"$set", bson.D{
-			{"isbn", book.Isbn},
-			{"title", book.Title},
-			{"author", bson.D{
-				{"firstname", book.Author.FirstName},
-				{"lastname", book.Author.LastName},
-			}},
-		}},
-	}
+	// update := bson.D{
+	// 	{"$set", bson.D{
+	// 		{"division", bson.D{
+	// 			{"firstname", division.Division.DivisionTwo},
+	// 		}},
+	// 	}},
+	// }
 
-	err := collection.FindOneAndUpdate(context.TODO(), filter, update).Decode(&division)
+	// err := collection.FindOneAndUpdate(context.TODO(), filter, update).Decode(&division)
 
-	if err != nil {
-		helper.GetError(err, w)
-		return
-	}
+	// if err != nil {
+	// 	helper.GetError(err, w)
+	// 	return
+	// }
 
-	DataOn.Division = div
+	division.ID = div
 
 	json.NewEncoder(w).Encode(division)
 }
 
-func deleteBook(w http.ResponseWriter, r *http.Request) {
+func deleteDivision(w http.ResponseWriter, r *http.Request) {
 	// Set header
 	w.Header().Set("Content-Type", "application/json")
 
@@ -145,10 +142,10 @@ func deleteBook(w http.ResponseWriter, r *http.Request) {
 	var params = mux.Vars(r)
 
 	// string to primitve.ObjectID
-	div, err := primitive.ObjectIDFromHex(params["division"])
+	div, err := primitive.ObjectIDFromHex(params["_id"])
 
 	// prepare filter.
-	filter := bson.M{"division": div}
+	filter := bson.M{"_id": div}
 
 	deleteResult, err := collection.DeleteOne(context.TODO(), filter)
 
@@ -168,11 +165,11 @@ func main() {
 	r := mux.NewRouter()
 
   	// arrange our route
-	r.HandleFunc("/api", getBooks).Methods("GET")
-	r.HandleFunc("/api/{division}", getBook).Methods("GET")
-	r.HandleFunc("/api", createBook).Methods("POST")
-	r.HandleFunc("/api/{division}", updateBook).Methods("PUT")
-	r.HandleFunc("/api/{division}", deleteBook).Methods("DELETE")
+	r.HandleFunc("/api", getDivisions).Methods("GET")
+	r.HandleFunc("/api/{division}", getDivision).Methods("GET")
+	r.HandleFunc("/api", createDivision).Methods("POST")
+	r.HandleFunc("/api/{division}", updateDivision).Methods("PUT")
+	r.HandleFunc("/api/{division}", deleteDivision).Methods("DELETE")
 
   	// set our port address
 	log.Fatal(http.ListenAndServe(":8000", r))
